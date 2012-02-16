@@ -10,6 +10,8 @@ Ext.define('TimeZone.controller.Flights', {
                 store.each(function(flight) {
                     console.log(Ext.String.format('name: {0}; departure: {1}',
                         flight.get('name'), flight.get('departure')));
+                    console.log(Ext.String.format('name: {0}; arrival: {1}',
+                        flight.get('name'), flight.get('arrival')));
                 });
             }
         });

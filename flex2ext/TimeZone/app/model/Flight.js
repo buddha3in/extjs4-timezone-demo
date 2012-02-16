@@ -3,6 +3,7 @@ Ext.define('TimeZone.model.Flight', {
 
     fields: [
         { name: 'name', type: 'string' },
-        { name: 'departure', type: 'date' }
+        { name: 'departure', type: 'date' },
+        { name: 'arrival', type: 'date' }
     ]
 });
