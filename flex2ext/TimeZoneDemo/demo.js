@@ -20,8 +20,8 @@
     };
 
     var toTimezone = function(date, targetOffset) {
-        var sourceOffset = date._timezone,
-            targetOffset = targetOffset * 60; // 60 - minutes in an hour
+        var sourceOffset = date._timezone;
+        targetOffset = targetOffset * 60; // 60 - minutes in an hour
 
         // Convert and persist information about new timezone.
         date.setMinutes(date.getMinutes() + targetOffset - sourceOffset);
@@ -39,7 +39,7 @@
             }
         });
         return dateFields;
-    }
+    };
 
     var convertTimezoneForRecords = function(records, timezone) {
         var dateFields = extractDateFieldNames(records[0]);
@@ -142,7 +142,7 @@ Ext.define('TimeZone.controller.Flights', {
         this.getFlightsStore().on({
             load: function(store) {
                 var print = function(flight) {
-                    console.log(Ext.String.format('name: {0}; departure: {1}; arrival',
+                    console.log(Ext.String.format('name: {0}; departure: {1}; arrival: {2}',
                         flight.get('name'),
                         flight.get('departure'),
                         flight.get('arrival'))
