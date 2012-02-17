@@ -145,7 +145,7 @@ Ext.define('TimeZone.controller.Flights', {
                     console.log(Ext.String.format('name: {0}; departure: {1}; arrival',
                         flight.get('name'),
                         flight.get('departure'),
-                        flight.get('arrival'));
+                        flight.get('arrival'))
                     );
                 };
 
