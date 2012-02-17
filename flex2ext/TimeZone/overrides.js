@@ -9,13 +9,13 @@
     };
 
     var toTimeZone = function(date, targetOffset) {
-        var sourceOffset = date.getTimezoneOffset() / 60; // 60 - minutes in an hour
-        date.setHours(date.getHours() + sourceOffset + targetOffset);
-        return date;
-    };
+        var sourceOffset = date.getTimezoneOffset(),
+            targetOffset = targetOffset * 60; // 60 - minutes in an hour
 
-    var toUTC = function(date) {
-        return toTimeZone(date, TIME_ZONES.UTC);
+        // We add up both offsets because getTimezoneOffeset() returns value
+        // with inverted sign, so as a result we get correct value.
+        date.setMinutes(date.getMinutes() + sourceOffset + targetOffset);
+        return date;
     };
 
     // Ensure that Reader is availabe.
@@ -23,13 +23,19 @@
 
         // Override required methods.
         Ext.override(Ext.data.reader.Reader, {
-            readRecords: function() {
+
+            // The 'read' method is the perfect candidate for converting time zones,
+            // because its output already represents instances of Model class, not
+            // just plain JavaScript objects. And at the same time the data is still
+            // not in the store.
+            read: function() {
                 var resultSet = this.callOverridden(arguments),
                     records = resultSet.records,
                     dateFields = [];
 
-                if (records && records.length > 0) {
-                    // Collect all date fields for the model.
+                if (resultSet.total > 0) {
+
+                    // Collect all date fields of the model.
                     records[0].fields.each(function(field) {
                         if (field.type.type === 'date') {
                             dateFields.push(field.name);
