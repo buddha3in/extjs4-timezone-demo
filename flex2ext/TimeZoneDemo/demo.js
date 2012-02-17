@@ -30,6 +30,9 @@
         return date;
     };
 
+    // Helps to find all Date fields of the model,
+    // to avoid iterating through all the fields of each model.
+    // When we know field names we can access them directly.
     var extractDateFieldNames = function(record) {
         var dateFields = [];
 
@@ -51,8 +54,26 @@
                     record.set(field, toTimezone(record.get(field), timezone));
                 }
             });
+
+            //<debug>
+            print(record);
+            //</debug>
         });
     };
+
+    //<debug>
+    var print = function(flight) {
+        var ISO8601Long = "Y-m-d H:i";
+
+        console.log(Ext.String.format(
+            "{0}: departure: {1}, arrival: {2}, timezone: {3}",
+            flight.get('name'),
+            Ext.Date.format(flight.get('departure'), ISO8601Long),
+            Ext.Date.format(flight.get('arrival'), ISO8601Long),
+            flight.get('departure')._timezone / 60 // 60 - minute in an hour
+        ));
+    };
+    //</debug>
 
     // Ensure that Reader and Writer are available.
     Ext.require([
@@ -68,6 +89,10 @@
                 // of Model class, not just plain JavaScript objects. And at
                 // the same time the data is not in the store yet.
                 read: function() {
+                    //<debug>
+                    console.log('Inside Reader\'s plugin');
+                    //</debug>
+
                     var resultSet = this.callOverridden(arguments),
                         records   = resultSet.records;
 
@@ -83,6 +108,10 @@
                 // The 'write' method is the entry point for any writer,
                 // so it's the most appropriate place to convert timezones back.
                 write: function(request) {
+                    //<debug>
+                    console.log('Inside Writer\'s plugin');
+                    //</debug>
+
                     var records = request.records || [],
                         len     = records.length;
 
@@ -136,23 +165,7 @@ Ext.define('TimeZone.controller.Flights', {
     extend: 'Ext.app.Controller',
 
     stores: ['Flights'],
-    models: ['Flight'],
-
-    init: function() {
-        this.getFlightsStore().on({
-            load: function(store) {
-                var print = function(flight) {
-                    console.log(Ext.String.format('name: {0}; departure: {1}; arrival: {2}',
-                        flight.get('name'),
-                        flight.get('departure'),
-                        flight.get('arrival'))
-                    );
-                };
-
-                store.each(print);
-            }
-        });
-    }
+    models: ['Flight']
 });
 
 
