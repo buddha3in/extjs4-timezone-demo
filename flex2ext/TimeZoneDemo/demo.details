@@ -1,7 +1,7 @@
 ---
- name: Timezone demo
- description: Illustrates automatic timezone conversion within Ext.data.reader.Reader and Ext.data.writer.Writer
- authors:
+name: Timezone demo
+description: Illustrates automatic timezone conversion within Ext.data.reader.Reader and Ext.data.writer.Writer
+authors:
     - Anton Moiseev
- normalize_css: no
- ...
+normalize_css: no
+...
