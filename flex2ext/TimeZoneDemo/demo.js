@@ -123,7 +123,7 @@ Ext.define('TimeZone.store.Flights', {
     autoLoad: true,
     proxy: {
         type: 'ajax',
-        url: '/gh/get/response.json/antonmoiseev/farata/tree/jsfiddle/flex2ext/TimeZoneDemo/'
+        url: '/gh/get/response.json/antonmoiseev/farata/tree/master/flex2ext/TimeZoneDemo/'
     }
 });
 

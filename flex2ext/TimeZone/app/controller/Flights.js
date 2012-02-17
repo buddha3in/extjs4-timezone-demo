@@ -7,12 +7,15 @@ Ext.define('TimeZone.controller.Flights', {
     init: function() {
         this.getFlightsStore().on({
             load: function(store) {
-                store.each(function(flight) {
-                    console.log(Ext.String.format('name: {0}; departure: {1}',
-                        flight.get('name'), flight.get('departure')));
-                    console.log(Ext.String.format('name: {0}; arrival: {1}',
-                        flight.get('name'), flight.get('arrival')));
-                });
+                var print = function(flight) {
+                    console.log(Ext.String.format('name: {0}; departure: {1}; arrival: {2}',
+                        flight.get('name'),
+                        flight.get('departure'),
+                        flight.get('arrival'))
+                    );
+                };
+
+                store.each(print);
             }
         });
     }
