@@ -2,7 +2,7 @@
 (function() {
 
     if (!Date.prototype._timezone) {
-        // Since getTimezoneOffeset() returns value with inverted sign,
+        // Since getTimezoneOffset() returns value with inverted sign,
         // multiply by -1 to normalize offset value.
         Date.prototype._timezone = (new Date()).getTimezoneOffset() * -1;
     }
@@ -16,7 +16,7 @@
     };
 
     var toTimezone = function(date, targetOffset) {
-        var sourceOffset = date._timezone;
+        var sourceOffset = date.getTimezoneOffset() * -1;
         targetOffset = targetOffset * 60; // 60 - minutes in an hour
 
         // Convert and persist information about new timezone.
